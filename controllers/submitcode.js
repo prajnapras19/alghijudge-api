@@ -1,10 +1,7 @@
 const {java} = require('compile-run');
 
 numberOfCasesDict = {
-    "TP-1 SDA 2019": 10,
-    "TP-2 SDA 2019": 15,
-    "TP-3 SDA 2019": 40,
-    "TP-4 SDA 2019": 25,
+    "TP-1 SDA 2020": 2,
 }
 
 const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
@@ -90,10 +87,10 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                 isAccepted = "AC";
                                             }
                                             if (inputData.length >= 100000) {
-                                                inputData = `https://raw.githubusercontent.com/darklordace/alghijudge-api/master/static/${problemName}/in${i+1}`;
+                                                inputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/in${i+1}`;
                                             }
                                             if (outputData.length >= 100000) {
-                                                outputData = `https://raw.githubusercontent.com/darklordace/alghijudge-api/master/static/${problemName}/out${i+1}`;
+                                                outputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/out${i+1}`;
                                             }
                                             if (result.stdout.length >= 100000) {
                                                 result.stdout = "The result is too large to display";
@@ -143,10 +140,10 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                     isAccepted = "AC";
                                                 }
                                                 if (inputData.length >= 100000) {
-                                                    inputData = `https://raw.githubusercontent.com/darklordace/alghijudge-api/master/static/${problemName}/in${i+1}`;
+                                                    inputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/in${i+1}`;
                                                 }
                                                 if (outputData.length >= 100000) {
-                                                    outputData = `https://raw.githubusercontent.com/darklordace/alghijudge-api/master/static/${problemName}/out${i+1}`;
+                                                    outputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/out${i+1}`;
                                                 }
                                                 if (result.stdout.length >= 100000) {
                                                     result.stdout = "The result is too large to display";
