@@ -2,7 +2,6 @@ const {java} = require('compile-run');
 
 numberOfCasesDict = {
     "TP-1 SDA 2020": 2,
-    "TP-1 SDA 2019": 10,
 }
 
 const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
