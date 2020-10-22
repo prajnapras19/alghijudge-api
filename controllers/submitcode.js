@@ -68,6 +68,8 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                             result.stdout = removeTrailing(result.stdout);
                                             outputData = removeTrailing(outputData);     
                                             inputData = removeTrailing(inputData);
+                                            runningTime = result.cpuUsage;
+                                            memoryUsage = result.memoryUsage;  
 
                                             let isAccepted = "WA";
                                             if (result.exitCode === null || result.exitCode === 143) {
@@ -99,6 +101,8 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                 input: inputData,
                                                 expectedOutput: outputData,
                                                 programOutput: result,
+                                                runningTime: runningTime,
+                                                memoryUsage: memoryUsage,
                                                 isAccepted: isAccepted
                                             });
                                             resolve(i);
@@ -118,6 +122,8 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                 result.stdout = removeTrailing(result.stdout);
                                                 outputData = removeTrailing(outputData);     
                                                 inputData = removeTrailing(inputData);
+                                                runningTime = result.cpuUsage;
+                                                memoryUsage = result.memoryUsage;
 
                                                 let isAccepted = "WA";
                                                 if (result.exitCode === null || result.exitCode === 143) {
@@ -152,6 +158,8 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                     input: inputData,
                                                     expectedOutput: outputData,
                                                     programOutput: result,
+                                                    runningTime: runningTime,
+                                                    memoryUsage: memoryUsage,
                                                     isAccepted: isAccepted
                                                 });
                                                 resolve(i);
