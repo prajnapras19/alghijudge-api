@@ -4,7 +4,7 @@ numberOfCasesDict = {
     "TP-1 SDA 2020": 15,
     "LAB-2 SDA 2020": 16,
     "LAB-3 SDA 2020": 10,
-    "TP-2 SDA 2020": 16,
+    "TP-2 SDA 2020": 17,
 }
 
 const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
