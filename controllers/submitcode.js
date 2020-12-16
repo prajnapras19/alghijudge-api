@@ -1,9 +1,10 @@
-const {java} = require('compile-run');
+const { java } = require('compile-run');
 
 numberOfCasesDict = {
     "TP-1 SDA 2020": 15,
     "LAB-2 SDA 2020": 16,
     "LAB-3 SDA 2020": 10,
+    "LAB-4 SDA 2020": 15,
     "TP-2 SDA 2020": 17,
 }
 
@@ -45,13 +46,13 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
         let promises = [];
         for (let i = 0; i < numberOfCases; ++i) {
             promises[i] = new Promise((resolve, reject) => {
-                fs.readFile(`static/${problemName}/in${i+1}`, 'utf8', (err, data) => {
+                fs.readFile(`static/${problemName}/in${i + 1}`, 'utf8', (err, data) => {
                     if (err) {
                         submitRecord[newClassName]['failedmsg'] = "Error reading test case";
                         reject(new Error(err));
                     } else {
                         let inputData = data;
-                        fs.readFile(`static/${problemName}/out${i+1}`, 'utf8', (err, data) => {
+                        fs.readFile(`static/${problemName}/out${i + 1}`, 'utf8', (err, data) => {
                             if (err) {
                                 submitRecord[newClassName]['failedmsg'] = "Error reading test case";
                                 reject(new Error(err));
@@ -63,16 +64,16 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                         stdin: inputData,
                                         compileTimeout: 10000
                                     }, (err, result) => {
-                                        if(err) {
+                                        if (err) {
                                             submitRecord[newClassName]['failedmsg'] = "Error compiling/running the program";
                                             reject(new Error(err));
                                         }
-                                        else{
+                                        else {
                                             result.stdout = removeTrailing(result.stdout);
-                                            outputData = removeTrailing(outputData);     
+                                            outputData = removeTrailing(outputData);
                                             inputData = removeTrailing(inputData);
                                             runningTime = result.cpuUsage;
-                                            memoryUsage = result.memoryUsage;  
+                                            memoryUsage = result.memoryUsage;
 
                                             let isAccepted = "WA";
                                             if (result.exitCode === null || result.exitCode === 143) {
@@ -92,10 +93,10 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                 isAccepted = "AC";
                                             }
                                             if (inputData.length >= 100000) {
-                                                inputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/in${i+1}`;
+                                                inputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/in${i + 1}`;
                                             }
                                             if (outputData.length >= 100000) {
-                                                outputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/out${i+1}`;
+                                                outputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/out${i + 1}`;
                                             }
                                             if (result.stdout.length >= 100000) {
                                                 result.stdout = "The result is too large to display";
@@ -112,18 +113,18 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                         }
                                     });
                                 } else {
-                                    promises[i-1].then(value => {
+                                    promises[i - 1].then(value => {
                                         java.runFile(codePath, {
                                             stdin: inputData,
                                             compileTimeout: 10000
                                         }, (err, result) => {
-                                            if(err) {
+                                            if (err) {
                                                 submitRecord[newClassName]['failedmsg'] = "Error compiling/running the program";
                                                 reject(new Error(err));
                                             }
-                                            else{
+                                            else {
                                                 result.stdout = removeTrailing(result.stdout);
-                                                outputData = removeTrailing(outputData);     
+                                                outputData = removeTrailing(outputData);
                                                 inputData = removeTrailing(inputData);
                                                 runningTime = result.cpuUsage;
                                                 memoryUsage = result.memoryUsage;
@@ -149,10 +150,10 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
                                                     isAccepted = "AC";
                                                 }
                                                 if (inputData.length >= 100000) {
-                                                    inputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/in${i+1}`;
+                                                    inputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/in${i + 1}`;
                                                 }
                                                 if (outputData.length >= 100000) {
-                                                    outputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/out${i+1}`;
+                                                    outputData = `https://raw.githubusercontent.com/prajnapras19/alghijudge-api/master/static/${problemName}/out${i + 1}`;
                                                 }
                                                 if (result.stdout.length >= 100000) {
                                                     result.stdout = "The result is too large to display";
@@ -179,7 +180,7 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
             });
         }
 
-        promises[numberOfCases-1].then(values => {
+        promises[numberOfCases - 1].then(values => {
             fs.unlinkSync(codePath);
             submitRecord[newClassName]['finished'] = true;
             setTimeout(() => {
@@ -201,7 +202,7 @@ const handleSubmitCode = (fs, submitRecord) => (req, resp) => {
 function renameClassUtil(code, newClassName, targetSubstring) {
     let newCode = "";
     for (let i = 0; i < code.length; ++i) {
-        if (code.substring(i, targetSubstring.length+i) === targetSubstring) {
+        if (code.substring(i, targetSubstring.length + i) === targetSubstring) {
             let beforeCode = code.slice(0, i);
             let tempCode = code.slice(i, code.length);
             let afterCode = tempCode.slice(tempCode.search('{'), tempCode.length);
@@ -224,11 +225,11 @@ function renameClass(code, newClassName) {
 }
 
 function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
@@ -241,5 +242,5 @@ function removeTrailing(text) {
 }
 
 module.exports = {
-	handleSubmitCode: handleSubmitCode
+    handleSubmitCode: handleSubmitCode
 }
